@@ -1,0 +1,42 @@
+{
+  "name": "logpro",
+  "version": "1.0.0",
+  "description": "LogPro is observability service which helps user to check and analyze request and response for server.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "author": "Abhishek kolge",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.8.2",
+    "nodemon": "^3.0.1",
+    "prisma": "^5.4.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@joi/date": "^2.1.0",
+    "@prisma/client": "^5.4.1",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.41.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "express-fileupload": "^1.4.1",
+    "express-rate-limit": "^7.1.0",
+    "helmet": "^7.0.0",
+    "http-status-codes": "^2.3.0",
+    "joi": "^17.11.0",
+    "joi-password": "^4.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.9.5",
+    "otp-generator": "^4.0.1",
+    "validator": "^13.11.0",
+    "xss-clean": "^0.1.4"
+  }
+}
