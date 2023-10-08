@@ -172,7 +172,8 @@ const login = async (req, res) => {
   customUtils.attachCookiesToResponse({ res, tokenUser });
 
   res.status(StatusCodes.OK).json({
-    msg: 'Logged in successfully',
+    name: user.name,
+    profileImage: user.profileImage,
   });
 };
 

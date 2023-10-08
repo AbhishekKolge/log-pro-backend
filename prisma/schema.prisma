@@ -25,6 +25,28 @@ model User {
   passwordTokenExpiration DateTime?
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt
+  logs                    Log[]
+}
+
+model Log {
+  id             String   @id @default(uuid())
+  user           User     @relation(fields: [userId], references: [id])
+  userId         String
+  timestamp      DateTime
+  processingTime Int
+  rawHeaders     String
+  body           String?
+  httpVersion    String
+  method         String
+  remoteAddress  String
+  remoteFamily   String
+  url            String
+  statusCode     Int
+  statusMessage  String
+  headers        String
+  errorData      String?
+
+  @@index([userId])
 }
 
 enum Status {

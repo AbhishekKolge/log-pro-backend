@@ -22,6 +22,7 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 
 const authRouter = require('./routes/authRoutes');
 const userRouter = require('./routes/userRoutes');
+const logRouter = require('./routes/logRoutes');
 
 const app = express();
 
@@ -46,6 +47,7 @@ app.use(
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/logs', logRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

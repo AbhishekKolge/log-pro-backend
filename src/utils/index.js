@@ -13,6 +13,7 @@ const {
 const { removeQuotes } = require('./format');
 const { currentTime, checkTimeExpired, time } = require('./time');
 const { getUserAgent, getRequestIp, checkTestUser } = require('./requestInfo');
+const { Encrypter } = require('./encrypter');
 
 module.exports = {
   createJWT,
@@ -34,4 +35,5 @@ module.exports = {
   currentTime,
   checkTimeExpired,
   time,
+  Encrypter,
 };

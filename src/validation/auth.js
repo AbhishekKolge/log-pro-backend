@@ -5,7 +5,7 @@ const joiPassword = Joi.extend(joiPasswordExtendCore);
 const registerSchema = (req, res, next) => {
   const schema = Joi.object().keys({
     name: Joi.string().trim().max(20).min(3).required(),
-    email: Joi.string().trim().required(),
+    email: Joi.string().trim().email().required(),
     password: joiPassword
       .string()
       .trim()

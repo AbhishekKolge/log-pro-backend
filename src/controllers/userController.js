@@ -87,7 +87,6 @@ const removeProfileImage = async (req, res) => {
   const user = await prisma.user.findUnique({
     where: {
       profileImageId,
-      id: userId,
     },
   });
 
@@ -170,12 +169,12 @@ const generateLoggerKey = async (req, res) => {
     throw new CustomError.ConflictError('Logger key already generated');
   }
 
-  const key = customUtils.createRandomKey();
+  const key = new customUtils.Encrypter().encrypt(userId);
 
   await prisma.user.update({
     data: { key },
     where: {
-      id: req.user.userId,
+      id: userId,
     },
   });
 
