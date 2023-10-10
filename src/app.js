@@ -11,6 +11,8 @@ const xss = require('xss-clean');
 const cors = require('cors');
 const cloudinary = require('cloudinary').v2;
 
+const whitelist = [process.env.FRONT_END_ORIGIN, '*'];
+
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
@@ -39,7 +41,13 @@ app.use(
 );
 app.use(
   cors({
-    origin: '*',
+    origin: function (origin, callback) {
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     optionsSuccessStatus: 200,
     credentials: true,
   })
