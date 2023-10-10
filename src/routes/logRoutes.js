@@ -11,7 +11,6 @@ const {
 } = require('../middleware/authentication');
 const { addLogSchema } = require('../validation/log');
 const { validateRequest } = require('../middleware/validate-request');
-const { testUserMiddleware } = require('../middleware/test-user');
 
 const router = express.Router();
 

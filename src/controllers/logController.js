@@ -118,6 +118,7 @@ const getAnalytics = async (req, res) => {
         gte: new Date(+startDate),
         lte: new Date(+endDate),
       },
+      userId: req.user.userId,
     },
     select: {
       createdAt: true,
@@ -131,6 +132,7 @@ const getAnalytics = async (req, res) => {
         gte: new Date(+startDate),
         lte: new Date(+endDate),
       },
+      userId: req.user.userId,
     },
     select: {
       createdAt: true,
@@ -147,6 +149,7 @@ const getAnalytics = async (req, res) => {
       statusMessage: {
         not: 'OK',
       },
+      userId: req.user.userId,
     },
     select: {
       createdAt: true,
