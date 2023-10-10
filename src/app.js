@@ -39,7 +39,7 @@ app.use(
 );
 app.use(
   cors({
-    origin: 'https://log-pro-frontend-production.up.railway.app',
+    origin: '*',
     optionsSuccessStatus: 200,
     credentials: true,
   })
