@@ -28,12 +28,6 @@ const app = express();
 
 app.set('trust proxy', 1);
 app.use(helmet());
-app.use(
-  cors({
-    credentials: true,
-    origin: '*',
-  })
-);
 app.use(xss());
 app.use(express.json());
 app.use(morgan('tiny'));
@@ -43,6 +37,7 @@ app.use(
     useTempFiles: true,
   })
 );
+app.use(cors());
 // app.use(
 //   rateLimiter({
 //     windowMs: 15 * 60 * 1000,
