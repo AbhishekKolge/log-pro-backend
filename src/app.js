@@ -11,7 +11,7 @@ const xss = require('xss-clean');
 const cors = require('cors');
 const cloudinary = require('cloudinary').v2;
 
-const whitelist = [process.env.FRONT_END_ORIGIN, '*'];
+const whitelist = [process.env.FRONT_END_ORIGIN];
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -39,19 +39,20 @@ app.use(
     useTempFiles: true,
   })
 );
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (whitelist.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    optionsSuccessStatus: 200,
-    credentials: true,
-  })
-);
+const corsOptionsDelegate = function (req, callback) {
+  let corsOptions;
+  if (whitelist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = {
+      origin: process.env.FRONT_END_ORIGIN,
+      optionsSuccessStatus: 200,
+      credentials: true,
+    };
+  } else {
+    corsOptions = { origin: false };
+  }
+  callback(null, corsOptions);
+};
+app.use(cors(corsOptionsDelegate));
 // app.use(
 //   rateLimiter({
 //     windowMs: 15 * 60 * 1000,
