@@ -39,8 +39,9 @@ app.use(
 );
 app.use(
   cors({
-    credentials: true,
     origin: 'https://log-pro-frontend-production.up.railway.app',
+    optionsSuccessStatus: 200,
+    credentials: true,
   })
 );
 // app.use(
