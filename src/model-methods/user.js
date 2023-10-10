@@ -86,7 +86,3 @@ class User {
 }
 
 module.exports = User;
-
-// $2a$10$2PsLzlp3XReF2QHGjmMbjelShn12ihLY8yLeK4ip0goSbKtzzOtEe;
-// $2a$10$2PsLzlp3XReF2QHGjmMbjelShn12ihLY8yLeK4ip0goSbKtzzOtEe;
-// $2a$10$2PsLzlp3XReF2QHGjmMbjelShn12ihLY8yLeK4ip0goSbKtzzOtEe;

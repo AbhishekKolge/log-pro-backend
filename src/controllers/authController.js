@@ -21,11 +21,11 @@ const register = async (req, res) => {
     data: userModel.model,
   });
 
-  // await customUtils.sendVerificationEmail({
-  //   name: user.name,
-  //   email: user.email,
-  //   verificationToken,
-  // });
+  await customUtils.sendVerificationEmail({
+    name: user.name,
+    email: user.email,
+    verificationToken,
+  });
 
   res.status(StatusCodes.CREATED).json({
     msg: `Email verification token sent to ${user.email}`,
@@ -100,11 +100,11 @@ const forgotPassword = async (req, res) => {
     },
   });
 
-  // await customUtils.sendResetPasswordEmail({
-  //   name: user.name,
-  //   email: user.email,
-  //   passwordToken,
-  // });
+  await customUtils.sendResetPasswordEmail({
+    name: user.name,
+    email: user.email,
+    passwordToken,
+  });
 
   res
     .status(StatusCodes.OK)

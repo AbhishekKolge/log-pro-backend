@@ -86,6 +86,7 @@ const removeProfileImage = async (req, res) => {
 
   const user = await prisma.user.findUnique({
     where: {
+      id: userId,
       profileImageId,
     },
   });
