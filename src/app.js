@@ -37,7 +37,12 @@ app.use(
     useTempFiles: true,
   })
 );
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: 'https://log-pro-frontend-production.up.railway.app',
+  })
+);
 // app.use(
 //   rateLimiter({
 //     windowMs: 15 * 60 * 1000,
