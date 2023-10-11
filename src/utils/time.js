@@ -11,4 +11,20 @@ const time = (timeArg) => {
   return new Date(timeArg);
 };
 
-module.exports = { currentTime, checkTimeExpired, time };
+const isWeekRange = (date1, date2) => {
+  const hoursDifference = Math.abs((date1 - date2) / (60 * 60 * 1000 * 7));
+  return hoursDifference <= 24;
+};
+
+const isDayRange = (date1, date2) => {
+  const hoursDifference = Math.abs((date1 - date2) / (60 * 60 * 1000));
+  return hoursDifference <= 24;
+};
+
+module.exports = {
+  currentTime,
+  checkTimeExpired,
+  time,
+  isWeekRange,
+  isDayRange,
+};

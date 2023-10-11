@@ -11,7 +11,13 @@ const {
   createRandomKey,
 } = require('./createHash');
 const { removeQuotes } = require('./format');
-const { currentTime, checkTimeExpired, time } = require('./time');
+const {
+  currentTime,
+  checkTimeExpired,
+  time,
+  isWeekRange,
+  isDayRange,
+} = require('./time');
 const { getUserAgent, getRequestIp, checkTestUser } = require('./requestInfo');
 const { Encrypter } = require('./encrypter');
 
@@ -35,5 +41,7 @@ module.exports = {
   currentTime,
   checkTimeExpired,
   time,
+  isWeekRange,
+  isDayRange,
   Encrypter,
 };

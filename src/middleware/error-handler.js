@@ -37,7 +37,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
       }
       case 'P2003': {
         const key = err.meta.field_name;
-        customError.msg = `${key} does not exists`;
+        customError.msg = `${key} does not exist`;
         customError.statusCode = StatusCodes.NOT_FOUND;
         break;
       }

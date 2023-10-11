@@ -1,4 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
+const { Prisma } = require('@prisma/client');
 
 const prisma = require('../../prisma/prisma-client');
 
@@ -111,58 +112,48 @@ const getLogs = async (req, res) => {
 const getAnalytics = async (req, res) => {
   const { startDate, endDate } = req.query;
 
-  const users = await prisma.log.findMany({
-    distinct: ['remoteAddress'],
-    where: {
-      createdAt: {
-        gte: new Date(+startDate),
-        lte: new Date(+endDate),
-      },
-      userId: req.user.userId,
-    },
-    select: {
-      createdAt: true,
-      id: true,
-    },
-  });
+  let period = 'DAY';
 
-  const request = await prisma.log.findMany({
-    where: {
-      createdAt: {
-        gte: new Date(+startDate),
-        lte: new Date(+endDate),
-      },
-      userId: req.user.userId,
-    },
-    select: {
-      createdAt: true,
-      id: true,
-    },
-  });
+  if (customUtils.isWeekRange(new Date(+startDate), new Date(+endDate))) {
+    period = 'HOUR';
+  }
+  if (customUtils.isDayRange(new Date(+startDate), new Date(+endDate))) {
+    period = 'MINUTE';
+  }
 
-  const failedRequest = await prisma.log.findMany({
-    where: {
-      createdAt: {
-        gte: new Date(+startDate),
-        lte: new Date(+endDate),
-      },
-      statusMessage: {
-        not: 'OK',
-      },
-      userId: req.user.userId,
-    },
-    select: {
-      createdAt: true,
-      id: true,
-    },
-  });
+  const request = await prisma.$queryRaw(
+    Prisma.sql`
+    SELECT DATE_TRUNC(${Prisma.raw(
+      `'${period}'`
+    )}, "Log"."createdAt") AS created, COUNT("Log"."id")::INT AS count
+    FROM "Log"
+    WHERE "Log"."createdAt" BETWEEN ${Prisma.raw(
+      `'${new Date(+startDate).toISOString()}'`
+    )} AND ${Prisma.raw(`'${new Date(+endDate).toISOString()}'`)}
+    AND "Log"."userId" = ${req.user.userId}
+    GROUP BY DATE_TRUNC(${Prisma.raw(`'${period}'`)}, "Log"."createdAt")
+    ORDER BY created;
+  `
+  );
+
+  const failedRequest = await prisma.$queryRaw(
+    Prisma.sql`
+    SELECT DATE_TRUNC(${Prisma.raw(
+      `'${period}'`
+    )}, "Log"."createdAt") AS created, COUNT("Log"."id")::INT AS count
+    FROM "Log"
+    WHERE "Log"."createdAt" BETWEEN ${Prisma.raw(
+      `'${new Date(+startDate).toISOString()}'`
+    )} AND ${Prisma.raw(`'${new Date(+endDate).toISOString()}'`)}
+    AND "Log"."userId" = ${req.user.userId}
+    AND "Log"."statusMessage" != 'OK'
+    GROUP BY DATE_TRUNC(${Prisma.raw(`'${period}'`)}, "Log"."createdAt")
+    ORDER BY created;
+  `
+  );
 
   res.status(StatusCodes.OK).json({
-    usersCount: users.length,
-    users,
-    requestCount: request.length,
     request,
-    failedRequestCount: failedRequest.length,
     failedRequest,
   });
 };
