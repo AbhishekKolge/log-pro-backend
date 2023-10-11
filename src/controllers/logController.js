@@ -49,10 +49,16 @@ const getLogs = async (req, res) => {
     };
   }
   if (status === 'successful') {
-    queryObject.where.statusMessage = 'OK';
+    queryObject.where.statusMessage = {
+      in: ['OK', 'Not Modified'],
+    };
   }
   if (status === 'failed') {
-    queryObject.where.statusMessage = { not: 'OK' };
+    queryObject.where.NOT = {
+      statusMessage: {
+        in: ['OK', 'Not Modified'],
+      },
+    };
   }
   if (method) {
     queryObject.where.method = {
@@ -156,7 +162,7 @@ const getAnalytics = async (req, res) => {
       `'${new Date(+startDate).toISOString()}'`
     )} AND ${Prisma.raw(`'${new Date(+endDate).toISOString()}'`)}
     AND "Log"."userId" = ${req.user.userId}
-    AND "Log"."statusMessage" != 'OK'
+    AND "Log"."statusMessage" != 'OK' AND "Log"."statusMessage" != 'Not Modified'
     GROUP BY DATE_TRUNC(${Prisma.raw(`'${period}'`)}, "Log"."createdAt")
     ORDER BY created;
   `
