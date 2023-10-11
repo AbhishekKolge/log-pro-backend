@@ -121,6 +121,16 @@ const getAnalytics = async (req, res) => {
     period = 'MINUTE';
   }
 
+  const user = await prisma.$queryRaw(
+    Prisma.sql`
+    SELECT COUNT(DISTINCT "Log"."remoteAddress")::INT AS count 
+    FROM "Log" WHERE "Log"."createdAt" BETWEEN ${Prisma.raw(
+      `'${new Date(+startDate).toISOString()}'`
+    )} AND ${Prisma.raw(`'${new Date(+endDate).toISOString()}'`)}
+    AND "Log"."userId" = ${req.user.userId};
+  `
+  );
+
   const request = await prisma.$queryRaw(
     Prisma.sql`
     SELECT DATE_TRUNC(${Prisma.raw(
@@ -153,6 +163,7 @@ const getAnalytics = async (req, res) => {
   );
 
   res.status(StatusCodes.OK).json({
+    user,
     request,
     failedRequest,
   });
