@@ -9,7 +9,6 @@ const rateLimiter = require('express-rate-limit');
 const helmet = require('helmet');
 const xss = require('xss-clean');
 const cors = require('cors');
-const logProLogger = require('@abhishek_kolge/logpro-logger');
 const cloudinary = require('cloudinary').v2;
 
 const whitelist = [process.env.FRONT_END_ORIGIN];
@@ -54,12 +53,6 @@ const corsOptionsDelegate = function (req, callback) {
   callback(null, corsOptions);
 };
 app.use(cors(corsOptionsDelegate));
-app.use(
-  logProLogger({
-    key: process.env.LOGPRO_API_KEY,
-    type: 'production',
-  })
-);
 // app.use(
 //   rateLimiter({
 //     windowMs: 15 * 60 * 1000,
