@@ -17,6 +17,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@abhishek_kolge/logpro-logger": "^1.0.8",
     "@joi/date": "^2.1.0",
     "@prisma/client": "^5.4.1",
     "bcryptjs": "^2.4.3",
