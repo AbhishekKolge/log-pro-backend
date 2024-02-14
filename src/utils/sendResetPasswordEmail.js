@@ -7,7 +7,9 @@ const sendResetPasswordEmail = async ({ name, email, passwordToken }) => {
 
   return sendEmail({
     to: email,
-    subject: 'LogPro Reset Password Token',
+    subject: `${process.env.APP_NAME.split(' ').join(
+      '-'
+    )} Reset Password Token`,
     html,
   });
 };

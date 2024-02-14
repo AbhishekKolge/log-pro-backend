@@ -41,7 +41,7 @@ const uploadProfileImage = async (req, res) => {
 
     const result = await cloudinary.uploader.upload(profileImage.tempFilePath, {
       use_filename: true,
-      folder: 'logpro/profile-images',
+      folder: `${process.env.APP_NAME.split(' ').join('-')}/profile-images`,
     });
 
     await fs.unlink(profileImage.tempFilePath);

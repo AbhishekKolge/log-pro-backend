@@ -7,7 +7,9 @@ const sendVerificationEmail = async ({ name, email, verificationToken }) => {
 
   return sendEmail({
     to: email,
-    subject: 'LogPro Email Confirmation Token',
+    subject: `${process.env.APP_NAME.split(' ').join(
+      '-'
+    )} Email Confirmation Code`,
     html,
   });
 };
