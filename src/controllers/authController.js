@@ -181,6 +181,9 @@ const logout = async (req, res) => {
   res.cookie('token', 'logout', {
     httpOnly: true,
     maxAge: 0,
+    secure: true,
+    signed: true,
+    sameSite: 'none',
   });
 
   res.status(StatusCodes.OK).json({

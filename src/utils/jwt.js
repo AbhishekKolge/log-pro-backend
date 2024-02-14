@@ -18,8 +18,9 @@ const attachCookiesToResponse = ({ res, tokenUser }) => {
   res.cookie('token', token, {
     httpOnly: true,
     maxAge: process.env.TOKEN_EXPIRATION_TIME,
-    secure: process.env.NODE_ENV !== 'development',
+    secure: true,
     signed: true,
+    sameSite: 'none',
   });
 };
 
